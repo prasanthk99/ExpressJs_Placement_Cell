@@ -1,0 +1,194 @@
+<link rel="stylesheet" href="/css/admin.css">
+
+<h1>Student Details</h1>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Add Student
+</button>
+<form action="/admin/downloadStudentCSV" method="get">
+  <button type="submit" class="btn btn-primary">Download CSV</button>
+</form>
+  
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Student</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <form class="row g-3" action="/admin/addStudent" method="post">
+            <div class="mb-3 col-md-6">
+                <label for="batchName" class="form-label">Batch *</label>
+                <input type="text" class="form-control" id="batchName" name="batchName" required>
+                
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="studentname" class="form-label">Student Name *</label>
+                <input type="text" class="form-control" id="studentname" name="studentName" required> 
+            </div>
+
+            <div class="mb-3 col-12">
+              <label for="coursescore" class="form-label">College <span>*</span></label>
+              <input type="text" class="form-control" id="coursescore" name="college" required> 
+          </div>
+
+            <div class="mb-3 col-12">
+                <label for="coursescore" class="form-label">Course Score <span>*</span></label>
+                <input type="text" class="form-control" id="coursescore" name="courseScore" required> 
+            </div>
+
+            <!-- <div class="mb-3 col-12">
+                <label for="exampleInputEmail1" class="form-label">List Interviews</label>
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>           -->
+            <fieldset class="mb-3 col-12">
+                <legend class="col-form-label col-sm-2 pt-0">Student_Status</legend>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="Student_Status" id="gridRadios1" value="Placed" checked>
+                      <label class="form-check-label" for="gridRadios1">
+                          Placed
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="Student_Status" id="gridRadios2" value="Not_Placed">
+                      <label class="form-check-label" for="gridRadios2">
+                          Not Placed
+                      </label>
+                    </div>
+                </div>
+            </fieldset>
+            <!-- <div class="mb-3 col-12">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1">
+            </div> -->
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Add Student</button>
+        </form>
+    </div>
+    <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+    </div> -->
+    </div>
+</div>
+</div>
+
+
+<!-- <div class="row">
+  <div class="col">
+    <div class="card" style="width: 18rem;">
+      <img src="/images/Default_Profile_Pic.png" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card" style="width: 18rem;">
+      <img src="/images/Default_Profile_Pic.png" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">S.NO</th>
+      <th scope="col">Batch Name</th>
+      <th scope="col">Student Name</th>
+      <th scope="col">College Name</th>
+      <th scope="col">courseScore</th>
+      <th scope="col">Student_Status</th>
+      <!-- <th scope="col">Salary</th> -->
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+      <%
+      if(studentsData.length!=0){
+          var i=1;
+          studentsData.forEach(function(data){
+          %>
+      <tr>
+          <th scope="row"><%=i; %></th>
+          <td><%=data.batchName %></td>
+          <td><%=data.studentName %></td>
+          <td><%=data.college %></td>
+          <td><%=data.courseScore %></td>
+          <td><%=data.Student_Status %></td>
+          <!-- <td><%=data.salary %>LPA</td> -->
+          <td><a href="/edit/<%=data.id%>">Edit</a></td>
+          <td><a href="/admin/delete/<%=data.id%>">Delete</a></td>
+          <!-- <td>
+              <form method="POST" action="/admin/delete/<%=data.id%>">
+                  <a href="#">Delete</a>
+              </form>    
+          </td> -->
+      </tr>
+      <%  i++; }) %>
+      <% } else{ %>
+          <tr>
+              <td colspan="7">No Data Found</td>
+          </tr>
+      <% } %>
+  </tbody>
+</table>
+
+
+
+<!-- <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="col">
+      <div class="card">
+        <img src="/images/Default_Profile_Pic.png" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <img src="/images/Default_Profile_Pic.png" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <img src="/images/Default_Profile_Pic.png" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <img src="/images/Default_Profile_Pic.png" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+      </div>
+    </div>
+  </div> -->
